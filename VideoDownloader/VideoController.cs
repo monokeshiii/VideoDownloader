@@ -336,10 +336,12 @@ namespace VideoDownloader
                     return false;
                 }
 
+                // 無効な文字を取り除く
+                var videoTitle = RemoveInvalidFileNameChars(downloadStreamInfo.Video.Title);
                 // ダウンロード先のファイルパス
                 string fileExtension = audioStreamInfo.Container.Name;
-                string filePath = Path.Combine(outputDir, $"{downloadStreamInfo.Video.Title}.{fileExtension}");
-                string outputFilePath = Path.Combine(outputDir, $"{downloadStreamInfo.Video.Title}.{format}");
+                string filePath = Path.Combine(outputDir, $"{videoTitle}.{fileExtension}");
+                string outputFilePath = Path.Combine(outputDir, $"{videoTitle}.{format}");
 
                 // オーディオストリームをダウンロード
                 progressBar.Value = 0;

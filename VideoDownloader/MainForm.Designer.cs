@@ -133,6 +133,8 @@
             Controls.Add(btnExecute);
             Controls.Add(tbOutputDir);
             Controls.Add(tbDownloadUrl);
+            MaximizeBox = false;
+            MaximumSize = new Size(400, 230);
             Name = "MainForm";
             ShowIcon = false;
             Text = "VideoDonwloader";
