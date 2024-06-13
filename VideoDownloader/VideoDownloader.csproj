@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+    <PackageReference Include="YoutubeExplode" Version="6.3.16" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="tar -xf $(ProjectDir)lib\ffmpeg.zip -C lib&#xD;&#xA;robocopy $(ProjectDir)lib $(TargetDir) /XF ffmpeg.zip&#xD;&#xA;IF %25ERRORLEVEL%25 LSS 7 EXIT 0" />
+  </Target>
+
+</Project>
