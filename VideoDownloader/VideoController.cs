@@ -194,6 +194,28 @@ namespace VideoDownloader
             return await FfmpegProcessStartAsync($"-i \"{webmFilePath}\" -vn -acodec libmp3lame -q:a 2 \"{outputFilePath}\"", progressBar);
         }
 
+        /// <summary>
+        /// 無向なファイル名文字を取り除く
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private string RemoveInvalidFileNameChars(string fileName)
+        {
+            var invalidChars = Path.GetInvalidFileNameChars();
+            return string.Concat(fileName.Split(invalidChars));
+        }
+
+        /// <summary>
+        /// 無向なパス名文字を取り除く
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string RemoveInvalidPathChars(string path)
+        {
+            var invalidChars = Path.GetInvalidPathChars();
+            return string.Concat(path.Split(invalidChars));
+        }
+
         #endregion
 
         #region publicメソッド
@@ -258,10 +280,16 @@ namespace VideoDownloader
                     return false;
                 }
 
+                // 無効な文字を取り除く
+                var videoTitle = RemoveInvalidFileNameChars(downloadStreamInfo.Video.Title);
                 // 一時ファイルパス
-                string videoFilePath = Path.Combine(outputDir, $"{downloadStreamInfo.Video.Title}_video.{videoStreamInfo.Container.Name}");
-                string audioFilePath = Path.Combine(outputDir, $"{downloadStreamInfo.Video.Title}_audio.{audioStreamInfo.Container.Name}");
-                string outputFilePath = Path.Combine(outputDir, $"{downloadStreamInfo.Video.Title}.mp4");
+                string videoFilePath = Path.Combine(outputDir, $"{videoTitle}_video.{videoStreamInfo.Container.Name}");
+                string audioFilePath = Path.Combine(outputDir, $"{videoTitle}_audio.{audioStreamInfo.Container.Name}");
+                string outputFilePath = Path.Combine(outputDir, $"{videoTitle}.mp4");
+                // 無効な文字を取り除く
+                videoFilePath = RemoveInvalidPathChars(videoFilePath);
+                audioFilePath = RemoveInvalidPathChars(audioFilePath);
+                outputFilePath = RemoveInvalidPathChars(outputFilePath);
 
                 // ビデオストリームをダウンロード
                 progressBar.Value = 0;

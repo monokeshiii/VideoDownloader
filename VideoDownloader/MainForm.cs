@@ -44,7 +44,7 @@ namespace VideoDownloader
             if (File.Exists(UserSettingsFileName))
             {
                 // Jsonをデシリアライズ
-                using (var sr = new StreamReader(UserSettingsFileName, System.Text.Encoding.UTF8))
+                using (var sr = new StreamReader(UserSettingsFileName, Encoding.UTF8))
                 {
                     var data = sr.ReadToEnd();
                     var userSettingsJson = JsonConvert.DeserializeObject<UserSettingsJson>(data);
@@ -70,7 +70,7 @@ namespace VideoDownloader
             };
             // シリアライズして書き込み
             var data = JsonConvert.SerializeObject(userSettingsJson);
-            using (var sw = new StreamWriter(UserSettingsFileName, false, Encoding.GetEncoding("shift_jis")))
+            using (var sw = new StreamWriter(UserSettingsFileName, false, Encoding.UTF8))
             {
                 // JSON データをファイルに書き込み
                 sw.Write(data);
