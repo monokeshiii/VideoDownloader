@@ -2,7 +2,7 @@
 
 ## 前提
 - .NET 8.0がインストールされている必要があります。
-https://dotnet.microsoft.com/ja-jp/download/dotnet/8.0
+- https://dotnet.microsoft.com/ja-jp/download/dotnet/8.0
 
 ## 使い方
 - ①「ダウンロード元URL」に動画のURLを指定します。
