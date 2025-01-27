@@ -69,6 +69,7 @@
             // cbVideoQualityFormat
             // 
             cbVideoQualityFormat.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbVideoQualityFormat.Enabled = false;
             cbVideoQualityFormat.FormattingEnabled = true;
             cbVideoQualityFormat.Location = new Point(12, 70);
             cbVideoQualityFormat.MaxDropDownItems = 12;

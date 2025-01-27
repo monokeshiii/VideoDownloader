@@ -87,7 +87,8 @@ namespace VideoDownloader
             try
             {
                 btnVideoInfoLoad.Enabled = false;
-                //cbVideoQualityFormat.Items.Clear();
+                btnExecute.Enabled = false;
+                cbVideoQualityFormat.Enabled = false;
 
                 downloadStreamInfo = await videoController.LoadStreamInfoAsync(tbDownloadUrl.Text);
                 if (downloadStreamInfo == null)
@@ -111,6 +112,7 @@ namespace VideoDownloader
                 lblVideoTitle.Text = downloadStreamInfo.Video.Title;
 
                 btnExecute.Enabled = true;
+                cbVideoQualityFormat.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -134,6 +136,7 @@ namespace VideoDownloader
             {
                 btnExecute.Enabled = false;
                 btnVideoInfoLoad.Enabled = false;
+                cbVideoQualityFormat.Enabled = false;
 
                 var cbVal = cbVideoQualityFormat.SelectedValue?.ToString()?.Split(',');
                 if (cbVal == null) { return; }
@@ -144,23 +147,26 @@ namespace VideoDownloader
 
                 if (await videoController.DownloadYoutubeAsync(downloadStreamInfo, isVideo, format, quality, outputDir, progressBar, lblProgressText))
                 {
-                    MessageBox.Show("ダウンロードが完了しました。", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblProgressText.Text = "ダウンロード成功";
+                    progressBar.Value = 100;
                 }
                 else
                 {
                     lblProgressText.Text = "ダウンロード失敗";
+                    progressBar.Value = 0;
                 }
             }
             catch (Exception ex)
             {
                 lblProgressText.Text = ex.Message;
                 MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                progressBar.Value = 0;
             }
             finally
             {
-                progressBar.Value = 0;
                 btnExecute.Enabled = true;
                 btnVideoInfoLoad.Enabled = true;
+                cbVideoQualityFormat.Enabled = true;
             }
         }
 
